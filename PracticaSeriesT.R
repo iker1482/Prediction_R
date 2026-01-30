@@ -1,11 +1,12 @@
 library(lubridate)
 library(tidyverse)
 library(patchwork)
+library(forecast)
 # Practica de serie de Tiempo y Predicciones con datos ecobici
 # @author IkerAb
 
-file.choose() #Buscar el archivo descargado
-raw_data<-read_csv("/Users/ikerab/Desktop/R/2025-03.csv")
+dir<-file.choose() #Buscar el archivo descargado
+raw_data<-read_csv("dir")
 
 viajes_diarios<-raw_data %>%
   mutate(fecha_hora=dmy_hms(paste(Fecha_Retiro,Hora_Retiro)))%>%
@@ -38,7 +39,6 @@ conteo_ts
 #Start = c(1, 1) 
 #End = c(3, 24) 3 son los dias 24 es la frecuencia
 
-library(forecast)
 ajuste <- auto.arima(y=conteo_ts)
 summary(ajuste) 
 predicciones <- forecast(ajuste)
@@ -85,8 +85,8 @@ g2 <- ggplot(viajes_diarios_completos,aes(x=horas, y=conteo))+
     y="conteo de bicis"
   )
 
-(p_predict/g2)
-p_predict/p2_predict
-(p2_predict/g2)
+#Compracion de los dos pronosticos y real
+p_predict/p2_predict/g2
+
 
 
